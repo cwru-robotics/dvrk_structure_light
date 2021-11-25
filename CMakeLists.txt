@@ -3,27 +3,21 @@ project(dvrk_structure_light)
 
 find_package(catkin REQUIRED COMPONENTS
 	roscpp
+	cv_bridge
+	image_transport
+	sensor_msgs
 )
+
+catkin_package(CATKIN_DEPENDS cv_bridge image_transport sensor_msgs)
+
+find_package(OpenCV)
 
 include_directories(
 	${catkin_INCLUDE_DIRS}
 	${catkin_INCLUDES}
+	${OpenCV_INCLUDE_DIRS}
 )
 
-catkin_package()
+add_executable(pattern_display src/pattern_display.cpp)
 
-
-# add_executable(cam_driver_node src/cam_driver.cpp)
-
-# add_custom_command(
-# 	TARGET cam_driver_node PRE_BUILD
-# 	COMMAND ${CMAKE_COMMAND} -E copy
-# 		${CMAKE_CURRENT_SOURCE_DIR}/lib/libnncam.so
-# 		${CATKIN_DEVEL_PREFIX}/lib/libnncam.so
-# )
-
-# target_link_libraries(cam_driver_node
-# 	${catkin_LIBRARIES}
-# 	${OpenCV_LIBRARIES}
-# 	nncam
-# )
+target_link_libraries(pattern_display ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
