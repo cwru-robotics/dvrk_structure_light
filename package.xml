@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<package>
+	<name>dvrk_structure_light</name>
+	<version>0.0.0</version>
+	<description>package for structure light projecting in da vinci</description>
+	<maintainer email="axn337@case.edu">Ammar Nahari</maintainer>
+	<license>TODO</license>
+
+	<buildtool_depend>catkin</buildtool_depend>
+</package>
