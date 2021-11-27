@@ -19,5 +19,7 @@ include_directories(
 )
 
 add_executable(pattern_display src/pattern_display.cpp)
+add_executable(image_subscriber src/image_subscriber.cpp)
 
 target_link_libraries(pattern_display ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+target_link_libraries(image_subscriber ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
