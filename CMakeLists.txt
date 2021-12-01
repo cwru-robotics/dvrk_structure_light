@@ -10,8 +10,10 @@ find_package(catkin REQUIRED COMPONENTS
 
 catkin_package(CATKIN_DEPENDS cv_bridge image_transport sensor_msgs)
 
+# find_package( Gphoto2 REQUIRED )
 find_package(OpenCV)
 
+# ${GPHOTO2_INCLUDE_DIR}
 include_directories(
 	${catkin_INCLUDE_DIRS}
 	${catkin_INCLUDES}
@@ -20,6 +22,11 @@ include_directories(
 
 add_executable(pattern_display src/pattern_display.cpp)
 add_executable(image_subscriber src/image_subscriber.cpp)
+add_executable(gray_code_pattern src/gray_code_pattern.cpp)
+add_executable(gray_code_pattern_out src/gray_code_pattern_out.cpp)
 
 target_link_libraries(pattern_display ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 target_link_libraries(image_subscriber ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+target_link_libraries(gray_code_pattern ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+target_link_libraries(gray_code_pattern_out ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+# target_link_libraries(gray_code_pattern ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${GPHOTO2_INCLUDE_DIR)
