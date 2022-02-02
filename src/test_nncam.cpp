@@ -26,10 +26,20 @@ static void __stdcall EventCallback(unsigned nEvent, void* pCallbackCtx){
 		i.header.stamp.nsec = last_update_time.nsec;
 		fillImage(i, sensor_msgs::image_encodings::RGB8, info.height, info.width, 3 * info.width, reinterpret_cast<const void*>(image_space));
 
+
     cv::Mat image;
-    // cv_bridge::toCvShare(i, "bgr8")->image;
-		
+
+		cv_bridge::CvImage img_bridge;
+
+		// img_bridge=cv_bridge::CvImage(,,);
+  	cv_bridge::toCvCopy( i ,  sensor_msgs::image_encodings::BGR8)->image;
+		std::string sensor_img_status= (i.data.empty())?"empty":"populated";
+		std::string cv_img_status= (image.empty())?"empty":"populated";
+
+		ROS_WARN_STREAM("sensor image "<<sensor_img_status<<". CV image "<<cv_img_status);
+		cv::imshow("view", image);
 		// pub->publish(i);
+		ros::Duration(0.1).sleep();
 
   }
 }
