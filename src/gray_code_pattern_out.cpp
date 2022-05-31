@@ -16,8 +16,8 @@ int main( int argc, char** argv )
   structured_light::GrayCodePattern::Params params;
 
   // projector resolution
-  int proj_height= 400;
-  int proj_width= 400;
+  int proj_height= 300;
+  int proj_width= 300;
 
   string path="/home/ammarnahari/ros_ws/src/dvrk_structure_light/img/";
 
@@ -41,7 +41,8 @@ int main( int argc, char** argv )
   namedWindow("Pattern Window",WINDOW_NORMAL);
   resizeWindow("Pattern Window",params.width
   ,params.height);
-  moveWindow("Pattern Window",1920+150,500);
+  // moveWindow("Pattern Window",1920+150,500);
+  moveWindow("Pattern Window",600,500);
 
   int i = 0;
   while( i < (int) pattern.size() )
