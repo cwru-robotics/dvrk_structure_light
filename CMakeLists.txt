@@ -1,4 +1,11 @@
 cmake_minimum_required(VERSION 2.8.3)
+
+# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} HAVE_DSHOW HAVE_VIDEOINPUT" CACHE STRING "Default CXX options" FORCE)
+# message("CMake flags: " ${CMAKE_CXX_FLAGS}) 
+
+# set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} HAVE_DSHOW HAVE_VIDEOINPUT" CACHE STRING "Default C options" FORCE)
+# message("CMake flags: " ${CMAKE_C_FLAGS}) 
+
 project(dvrk_structure_light)
 
 find_package(catkin REQUIRED COMPONENTS
@@ -20,12 +27,12 @@ include_directories(
 	${OpenCV_INCLUDE_DIRS}
 )
 
-add_executable(pattern_display src/pattern_display.cpp)
-add_executable(image_subscriber src/image_subscriber.cpp)
-add_executable(gray_code_pattern src/gray_code_pattern.cpp)
+add_executable(pattern_display_test src/pattern_display_test.cpp)
+add_executable(image_subscriber_test src/image_subscriber_test.cpp)
+# add_executable(gray_code_pattern src/gray_code_pattern.cpp)
 add_executable(gray_code_pattern_out src/gray_code_pattern_out.cpp)
 add_executable(gray_code_pattern_capture src/gray_code_pattern_capture.cpp)
-add_executable(test_nncam src/test_nncam.cpp)
+# add_executable(test_nncam src/test_nncam.cpp)
 
 add_custom_command(
 	TARGET test_nncam PRE_BUILD
@@ -34,16 +41,16 @@ add_custom_command(
 		${CATKIN_DEVEL_PREFIX}/lib/libnncam.so
 )
 
-target_link_libraries(pattern_display ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
-target_link_libraries(image_subscriber ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
-target_link_libraries(gray_code_pattern ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+target_link_libraries(pattern_display_test ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+target_link_libraries(image_subscriber_test ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+# target_link_libraries(gray_code_pattern ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 target_link_libraries(gray_code_pattern_out ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 target_link_libraries(gray_code_pattern_capture ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 
 # target_link_libraries(gray_code_pattern ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${GPHOTO2_INCLUDE_DIR)
 
-target_link_libraries(test_nncam
-	${catkin_LIBRARIES}
-	${OpenCV_LIBRARIES}
-	nncam
-)
+# target_link_libraries(test_nncam
+# 	${catkin_LIBRARIES}
+# 	${OpenCV_LIBRARIES}
+# 	nncam
+# )
