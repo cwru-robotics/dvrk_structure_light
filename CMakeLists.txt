@@ -29,10 +29,8 @@ include_directories(
 
 add_executable(pattern_display_test src/pattern_display_test.cpp)
 add_executable(image_subscriber_test src/image_subscriber_test.cpp)
-# add_executable(gray_code_pattern src/gray_code_pattern.cpp)
-add_executable(gray_code_pattern_out src/gray_code_pattern_out.cpp)
+add_executable(gray_code_pattern_out_test src/gray_code_pattern_out_test.cpp)
 add_executable(gray_code_pattern_capture src/gray_code_pattern_capture.cpp)
-# add_executable(test_nncam src/test_nncam.cpp)
 
 add_custom_command(
 	TARGET test_nncam PRE_BUILD
@@ -43,14 +41,5 @@ add_custom_command(
 
 target_link_libraries(pattern_display_test ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 target_link_libraries(image_subscriber_test ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
-# target_link_libraries(gray_code_pattern ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
-target_link_libraries(gray_code_pattern_out ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+target_link_libraries(gray_code_pattern_out_test ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 target_link_libraries(gray_code_pattern_capture ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
-
-# target_link_libraries(gray_code_pattern ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${GPHOTO2_INCLUDE_DIR)
-
-# target_link_libraries(test_nncam
-# 	${catkin_LIBRARIES}
-# 	${OpenCV_LIBRARIES}
-# 	nncam
-# )

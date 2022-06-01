@@ -56,12 +56,13 @@ int main( int argc, char** argv )
   pattern.push_back( white );
   pattern.push_back( black );
 
-  // Setting pattern window on second monitor (the projector's one)
+  // Setting pattern window on projector's monitor
   namedWindow("Pattern Window",WINDOW_NORMAL);
   resizeWindow("Pattern Window",params.width
   ,params.height);
   moveWindow("Pattern Window",600,500);
 
+  // subscribe to amscope driver
   ros::NodeHandle nh;
   ros::Subscriber sub = nh.subscribe("/amscope/image_raw", 1, imageCB);
   ROS_INFO("created subscribier, spinning...");
@@ -93,7 +94,7 @@ int main( int argc, char** argv )
 
     // imshow("view",img);
 
-    std::string savingName = "/home/ammarnahari/ros_ws/src/dvrk_structure_light/img/" + std::to_string(i) + ".jpg";
+    std::string savingName = "/home/ammarnahari/ros_ws/src/dvrk_structure_light/data/" + std::to_string(i) + ".jpg";
     imwrite(savingName,img);
     if (waitKey(1) <= 0) break;
     
