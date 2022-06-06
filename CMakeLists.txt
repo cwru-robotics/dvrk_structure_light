@@ -31,6 +31,7 @@ add_executable(pattern_display_test src/pattern_display_test.cpp)
 add_executable(image_subscriber_test src/image_subscriber_test.cpp)
 add_executable(gray_code_pattern_out_test src/gray_code_pattern_out_test.cpp)
 add_executable(gray_code_pattern_capture src/gray_code_pattern_capture.cpp)
+add_executable(gray_code_pattern_decode src/gray_code_pattern_decode.cpp)
 
 add_custom_command(
 	TARGET test_nncam PRE_BUILD
@@ -43,3 +44,4 @@ target_link_libraries(pattern_display_test ${catkin_LIBRARIES} ${OpenCV_LIBRARIE
 target_link_libraries(image_subscriber_test ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 target_link_libraries(gray_code_pattern_out_test ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 target_link_libraries(gray_code_pattern_capture ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+target_link_libraries(gray_code_pattern_decode ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
