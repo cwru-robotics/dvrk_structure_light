@@ -82,7 +82,7 @@ int main( int argc, char** argv )
   int proj_height= 300;
   int proj_width= 300;
 
-  string path="/home/ammarnahari/ros_ws/src/dvrk_structure_light/img/";
+  string path="/home/ammarnahari/ros_ws/src/dvrk_structure_light/data/";
 
   params.height=proj_height;
   params.width=proj_width;
