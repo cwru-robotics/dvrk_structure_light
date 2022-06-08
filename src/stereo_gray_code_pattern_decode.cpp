@@ -124,14 +124,44 @@ int main( int argc, char** argv )
 	k1 = -0.281240,	k2 = 0.645295,	 k3 = 0.194766,	 p1 = 0.001878,	 p2 = -0.003341;
 
   Mat cam1intrinsics, cam1distCoeffs, cam2intrinsics, cam2distCoeffs, R, T;
-  cam1intrinsics= (Mat_<double>(3,3) << fx, 0, cx, 0, fy, cy, 0, 0, 1);
-  cam1distCoeffs= (Mat_<double>(1,3) << k1, k2, p1, p2, k3);
-  cam2intrinsics=cam1intrinsics;
-  cam2distCoeffs=cam1distCoeffs;
-  R= (Mat_<double>(3,3)<<0.999922,	-0.008824,	0.008825,
-    0.008902,	0.999921,	-0.00882,
-    -0.008746,	0.008902,	0.999922);
-  T= (Mat_<double>(1,3)<<0.024836, 0.023145, -0.055225);
+  // cam1intrinsics= (Mat_<double>(3,3) << fx, 0, cx, 0, fy, cy, 0, 0, 1);
+  // cam1distCoeffs= (Mat_<double>(1,5) << k1, k2, p1, p2, k3);
+  // cam2intrinsics=cam1intrinsics;
+  // cam2distCoeffs=cam1distCoeffs;
+
+  cam1intrinsics= (
+    Mat_<double>(3,3)<<
+    761.5817766381223, 0, 342.3739543468309,
+    0, 767.7849495560155, 237.5974789518932,
+    0, 0, 1
+  );
+  cam1distCoeffs= (
+    Mat_<double>(1,5)<<
+    -0.2737998745294181, 0.8674916756121842, -0.008319030465356753, -0.002869687095442371, 0
+  );
+  cam2intrinsics= (
+    Mat_<double>(3,3)<<
+    764.3248923361029, 0, 256.6944699510889, 
+    0, 771.2949880954194, 255.9899967841515, 
+    0, 0, 1
+  );
+  cam2distCoeffs= (
+    Mat_<double>(1,5)<<
+    -0.2664461290241049, 0.6833873298555669, -0.0076201088705216, 0.008325426559456407, 0
+  );
+
+  // R= (Mat_<double>(3,3) << 0.999922,	-0.008824,	0.008825,
+  //                         0.008902,	0.999921,	-0.00882,
+  //                         -0.008746,	0.008902,	0.999922);
+  // T= (Mat_<double>(1,3) <<0.024836, 0.023145, -0.055225);
+  // R= Mat::eye(3,3,CV_64F);
+  R= (
+    Mat_<double>(3,3)<<
+    1,0,0,
+    0,1,0,
+    0,0,1  
+  );
+  T= (Mat_<double>(3,1) <<0.0,- 0.05, 0.0);
   cout << "cam1intrinsics" << endl << cam1intrinsics << endl;
   cout << "cam1distCoeffs" << endl << cam1distCoeffs << endl;
   cout << "cam2intrinsics" << endl << cam2intrinsics << endl;
@@ -156,8 +186,12 @@ int main( int argc, char** argv )
   stereoRectify( cam1intrinsics, cam1distCoeffs, cam2intrinsics, cam2distCoeffs, imagesSize, R, T, R1, R2, P1, P2, Q, 0,
                 -1, imagesSize, &validRoi[0], &validRoi[1] );
   Mat map1x, map1y, map2x, map2y;
+  
+  cout << "initUndistortRectifyMap..." << endl;
   initUndistortRectifyMap( cam1intrinsics, cam1distCoeffs, R1, P1, imagesSize, CV_32FC1, map1x, map1y );
   initUndistortRectifyMap( cam2intrinsics, cam2distCoeffs, R2, P2, imagesSize, CV_32FC1, map2x, map2y );
+
+  cout<<"R1"<<endl<<R1<<"\nR2\n"<<R2<<"\nP1\n"<<P1<<"\nP2\n"<<P2<<"\nQ\n"<<Q<<"\nmap1x\n"<<map1x.size()<<"\nmap1y\n"<<map1y.size()<<"\nmap2x\n"<<map2x.size()<<"\nmap2y\n"<<map2y.size()<<endl;
   // Loading pattern images
   for( size_t i = 0; i < numberOfPatternImages; i++ )
   {
