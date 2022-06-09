@@ -41,6 +41,7 @@
 
 #include <ros/ros.h>
 #include <iostream>
+#include <fstream>
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/calib3d.hpp>
@@ -92,11 +93,50 @@ static bool readStringList( const string& filename, vector<string>& l )
   }
   return true;
 }
+void intrinsic_file_read(string file_name, Mat* intrinsics, Mat* distCoeffs){
+  
+  cout<<"opening file "<<file_name<<endl;
+  ifstream inFil(file_name);
+
+  // Loading calibration parameters
+  double fx,fy,cx,cy,k1,k2,k3,p1,p2;
+
+  string temp;
+  double found;
+  vector<double> data_list;
+  data_list.clear();
+  while (inFil)
+  {
+    inFil >> found;
+    data_list.push_back(found);
+  }
+  
+  fx=data_list[0];
+  fy=data_list[1];
+  cx=data_list[2];
+  cy=data_list[3];
+  k1=data_list[4];
+  k2=data_list[5];
+  k3=data_list[6];
+  p1=data_list[7];
+  p2=data_list[8];
+
+
+  ROS_INFO("fx %lf, cx %lf, fy %lf, cy %lf, k1 %lf, k2 %lf, p1 %lf, p2 %lf, k3 %lf",fx, cx, fy, cy, k1, k2, p1, p2, k3);
+  
+
+  *intrinsics= (Mat_<double>(3,3) << fx, 0, cx, 0, fy, cy, 0, 0, 1);
+  *distCoeffs= (Mat_<double>(1,5) << k1, k2, p1, p2, k3);
+
+}
 int main( int argc, char** argv )
 {
   ros::init(argc, argv, "stereo_gray_code_pattern_capture");
   structured_light::GrayCodePattern::Params params;
   String images_file ="/home/ammarnahari/ros_ws/src/dvrk_structure_light/param/stereo_structured_light_data.yaml";
+  String cam1_intrinnsics_file="/home/ammarnahari/ros_ws/src/dvrk_structure_light/param/left_cam_intrinsics.txt";
+  String cam2_intrinsics_file="/home/ammarnahari/ros_ws/src/dvrk_structure_light/param/right_cam_intrinsics.txt";
+  
   params.width = 300;
   params.height = 300;
 
@@ -119,42 +159,13 @@ int main( int argc, char** argv )
     cout << "can not open " << images_file << " or the string list is empty" << endl;
     return -1;
   }
-  // Loading calibration parameters
-  double fx = 767.371431,	fy = 768.694754,	 cx = 370.403931,	 cy = 301.121177,
-	k1 = -0.281240,	k2 = 0.645295,	 k3 = 0.194766,	 p1 = 0.001878,	 p2 = -0.003341;
 
   Mat cam1intrinsics, cam1distCoeffs, cam2intrinsics, cam2distCoeffs, R, T;
-  // cam1intrinsics= (Mat_<double>(3,3) << fx, 0, cx, 0, fy, cy, 0, 0, 1);
-  // cam1distCoeffs= (Mat_<double>(1,5) << k1, k2, p1, p2, k3);
-  // cam2intrinsics=cam1intrinsics;
-  // cam2distCoeffs=cam1distCoeffs;
 
-  cam1intrinsics= (
-    Mat_<double>(3,3)<<
-    761.5817766381223, 0, 342.3739543468309,
-    0, 767.7849495560155, 237.5974789518932,
-    0, 0, 1
-  );
-  cam1distCoeffs= (
-    Mat_<double>(1,5)<<
-    -0.2737998745294181, 0.8674916756121842, -0.008319030465356753, -0.002869687095442371, 0
-  );
-  cam2intrinsics= (
-    Mat_<double>(3,3)<<
-    764.3248923361029, 0, 256.6944699510889, 
-    0, 771.2949880954194, 255.9899967841515, 
-    0, 0, 1
-  );
-  cam2distCoeffs= (
-    Mat_<double>(1,5)<<
-    -0.2664461290241049, 0.6833873298555669, -0.0076201088705216, 0.008325426559456407, 0
-  );
+  intrinsic_file_read(cam1_intrinnsics_file,&cam1intrinsics,&cam1distCoeffs);
 
-  // R= (Mat_<double>(3,3) << 0.999922,	-0.008824,	0.008825,
-  //                         0.008902,	0.999921,	-0.00882,
-  //                         -0.008746,	0.008902,	0.999922);
-  // T= (Mat_<double>(1,3) <<0.024836, 0.023145, -0.055225);
-  // R= Mat::eye(3,3,CV_64F);
+  intrinsic_file_read(cam2_intrinsics_file,&cam2intrinsics,&cam2distCoeffs);
+
   R= (
     Mat_<double>(3,3)<<
     1,0,0,
@@ -167,6 +178,9 @@ int main( int argc, char** argv )
   cout << "cam2intrinsics" << endl << cam2intrinsics << endl;
   cout << "cam2distCoeffs" << endl << cam2distCoeffs << endl;
   cout << "T" << endl << T << endl << "R" << endl << R << endl;
+
+  // return 0;
+
   if( (!R.data) || (!T.data) || (!cam1intrinsics.data) || (!cam2intrinsics.data) || (!cam1distCoeffs.data) || (!cam2distCoeffs.data) )
   {
     cout << "Failed to load cameras calibration parameters" << endl;

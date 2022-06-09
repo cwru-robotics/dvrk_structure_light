@@ -1,0 +1,20 @@
+ 398  roslaunch hw_camera run_camera.launch 
+  399  rosservice call /reset
+  400  cd ros_ws
+  401  catkin_make
+  402  ls
+  403  cd Calib-Sled/
+  404  ls
+  405  /home/tes77/ros_ws/src/catkin_simple
+  406  /home/tes77/ros_ws/src/roadprintz_cam_cal_tes
+  407  /home/tes77/ros_ws/src/trajectory_utils
+  408  roslaunch intrinsic_acquisition intrinsic_acquisition.launch path:=/home/ammarnahari/ros_ws/Calib-Sled/task_description.yml topic:=/davinci_endo/right/image_color
+  409  cd ../src
+  410  git clone https://github.com/cwru-robotics/3d-calibration.git
+  411  CD ..
+  412  cd ..
+  413  catkin_make
+  414  roslaunch dotboard_detection dots_detect.launch adf_path:=/home/ammarnahari/ros_ws/Calib-Sled/data/task_description.yml csv_path:=/home/ammarnahari/ros_ws/Calib-Sled/data/data.csv
+  415  roslaunch intrinsic_calibration calibrate.launch data:=/home/ammarnahari/ros_ws/Calib-Sled/data/data.csv position_initial:=/home/ammarnahari/ros_ws/Calib-Sled/data/task_description.yml
+  416  history
+
