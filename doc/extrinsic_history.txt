@@ -1,0 +1,28 @@
+
+  455  rosservice call /motion_command "x: 0.05
+y: 0.05
+theta: 0.05
+name: ''" 
+  456  rosservice call /motion_command "x: 0.05
+y: 0.075
+theta: 0.05
+name: ''" 
+  457  rosservice call /motion_command "x: 0.05
+y: 0.1
+theta: 0.05
+name: ''" 
+  458  roslaunch cal_camera extrensic.launch CAL_CODE:=cwru
+  459  top
+  460  killall rosmaster
+  461  top
+  462  roslaunch cal_camera extrensic.launch CAL_CODE:=cwru
+  463  roslaunch hw_camera run_camera.launch 
+  464  roslaunch cal_camera extrensic.launch CAL_CODE:=cwru
+  465* sudo apt install libceres1 libceres-dev 
+  466  top
+  467  roslaunch cal_camera extrensic.launch CAL_CODE:=cwru view_rviz:=false
+  468  roslaunch hw_camera run_camera.launch 
+  469  roslaunch cal_camera extrensic.launch CAL_CODE:=cwru view_rviz:=false
+  470  top
+  471  roslaunch cal_camera extrensic.launch CAL_CODE:=cwru view_rviz:=false
+  472  history >> src/dvrk_structure_light/doc/extrinsic_history.txt

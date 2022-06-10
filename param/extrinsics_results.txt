@@ -1,0 +1,40 @@
+<launch>
+# this file might be empty
+# It might contain static transform publishers that were updated through calibration
+# Often, transform interfaces use some other mechanism to update themselves
+<node pkg="tf" type="static_transform_publisher" name="camera_l_tf_broadcaster" args="0.0392195 0.0412663 -0 -0 -0 0.0181297 0.999836 world_frame camera_l 100" />
+<node pkg="tf" type="static_transform_publisher" name="camera_r_tf_broadcaster" args="-0.095274 0.042185 -0 -0 -0 0.018085 0.999836 world_frame camera_r 100" />
+
+</launch> 
+
+
+[ INFO] [1654877375.024811974]: Calibration Sucessful. Initial cost per observation = 16076.902483 final cost per observation 0.025146
+[ INFO] [1654877375.024917636]: Storing results in: results.launch
+[ INFO] [1654877375.025105452]: Static Cameras
+[ INFO] [1654877375.025149720]: camera_l =[
+  0.999  -0.036  -0.000   0.039
+   0.036   0.999   0.000   0.041
+   0.000  -0.000  1.000  -0.000
+   0.000   0.000  0.000   1.000];
+ rpy= 0.036261 -0.000000 -0.000000
+ quat= -0.000 -0.000  0.018  1.000 
+[ INFO] [1654877375.025172484]: fx = 4570.190838 fy=4585.536265 cx=336.695990 cy=255.329372
+[ INFO] [1654877375.025189288]: k1 = -6.350818 k2 = -663.550539 k3 = 160263.926703 p1 = 0.027554 p2 = 0.045159
+[ INFO] [1654877375.025207879]: camera_r =[
+  0.999  -0.036  -0.000  -0.095
+   0.036   0.999   0.000   0.042
+   0.000  -0.000  1.000  -0.000
+   0.000   0.000  0.000   1.000];
+ rpy= 0.036172 -0.000000 -0.000000
+ quat= -0.000 -0.000  0.018  1.000 
+[ INFO] [1654877375.025226549]: fx = 3063.583597 fy=3955.731224 cx=-257.743101 cy=282.977980
+[ INFO] [1654877375.025237943]: k1 = -7.839688 k2 = 57.479071 k3 = -1020.875584 p1 = -0.004604 p2 = 1.068784
+[ INFO] [1654877375.025247516]: Static Targets:
+[ INFO] [1654877375.025264841]: davinci_target =[
+  1.000   0.000   0.000  -0.035
+   0.000   1.000   0.000  -0.025
+   0.000   0.000  1.000   0.100
+   0.000   0.000  0.000   1.000];
+ rpy= 0.000000 -0.000000 0.000000
+ quat=  0.000  0.000  0.000  1.000 
+
