@@ -133,7 +133,7 @@ int main( int argc, char** argv )
 {
   ros::init(argc, argv, "stereo_gray_code_pattern_capture");
   structured_light::GrayCodePattern::Params params;
-  String images_file ="/home/ammarnahari/ros_ws/src/dvrk_structure_light/param/stereo_structured_light_data.yaml";
+  String images_file ="/home/ammarnahari/ros_ws/src/dvrk_structure_light/param/stereo_structured_light_data_170x170.yaml";
   String cam1_intrinnsics_file="/home/ammarnahari/ros_ws/src/dvrk_structure_light/param/left_cam_intrinsics.txt";
   String cam2_intrinsics_file="/home/ammarnahari/ros_ws/src/dvrk_structure_light/param/right_cam_intrinsics.txt";
   
@@ -171,7 +171,7 @@ int main( int argc, char** argv )
     -0.0002, 1.0000, 0.0002,
      0.0002,-0.0002, 1.0000  
   );
-  T= (Mat_<double>(3,1) < 0.0056858,-0.0003983, 0.0003763);
+  T= (Mat_<double>(3,1) << 0.0056858,-0.0003983, 0.0003763);
   cout << "cam1intrinsics" << endl << cam1intrinsics << endl;
   cout << "cam1distCoeffs" << endl << cam1distCoeffs << endl;
   cout << "cam2intrinsics" << endl << cam2intrinsics << endl;
@@ -212,7 +212,7 @@ int main( int argc, char** argv )
     captured_pattern[1][i] = imread( imagelist[i + numberOfPatternImages + 2], IMREAD_GRAYSCALE );
     if( (!captured_pattern[0][i].data) || (!captured_pattern[1][i].data) )
     {
-      cout << "Empty images" << endl;
+      cout << "Empty image " <<i<< endl;
       return -1;
     }
     remap( captured_pattern[1][i], captured_pattern[1][i], map1x, map1y, INTER_NEAREST, BORDER_CONSTANT, Scalar() );
