@@ -137,8 +137,8 @@ int main( int argc, char** argv )
   String cam1_intrinnsics_file="/home/ammarnahari/ros_ws/src/dvrk_structure_light/param/left_cam_intrinsics.txt";
   String cam2_intrinsics_file="/home/ammarnahari/ros_ws/src/dvrk_structure_light/param/right_cam_intrinsics.txt";
   
-  params.width = 300;
-  params.height = 300;
+  params.width = 170;
+  params.height = 170;
 
   // Set up GraycodePattern with params
   Ptr<structured_light::GrayCodePattern> graycode = structured_light::GrayCodePattern::create( params );
@@ -147,8 +147,8 @@ int main( int argc, char** argv )
   if( argc == 7 )
   {
     // If passed, setting the white and black threshold, otherwise using default values
-    white_thresh =4;
-    black_thresh = 5;
+    white_thresh =145;
+    black_thresh = 190;
     graycode->setWhiteThreshold( white_thresh );
     graycode->setBlackThreshold( black_thresh );
   }
@@ -165,14 +165,13 @@ int main( int argc, char** argv )
   intrinsic_file_read(cam1_intrinnsics_file,&cam1intrinsics,&cam1distCoeffs);
 
   intrinsic_file_read(cam2_intrinsics_file,&cam2intrinsics,&cam2distCoeffs);
-
   R= (
     Mat_<double>(3,3)<<
-    1,0,0,
-    0,1,0,
-    0,0,1  
+     1.0000, 0.0002,-0.0002,
+    -0.0002, 1.0000, 0.0002,
+     0.0002,-0.0002, 1.0000  
   );
-  T= (Mat_<double>(3,1) <<0.0,- 0.05, 0.0);
+  T= (Mat_<double>(3,1) < 0.0056858,-0.0003983, 0.0003763);
   cout << "cam1intrinsics" << endl << cam1intrinsics << endl;
   cout << "cam1distCoeffs" << endl << cam1distCoeffs << endl;
   cout << "cam2intrinsics" << endl << cam2intrinsics << endl;

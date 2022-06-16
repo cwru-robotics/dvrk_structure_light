@@ -87,8 +87,8 @@ int main( int argc, char** argv )
   ros::init(argc, argv, "stereo_gray_code_pattern_capture");
   structured_light::GrayCodePattern::Params params;
   String path = "/home/ammarnahari/ros_ws/src/dvrk_structure_light/data/";
-  params.width = 300;
-  params.height = 300;
+  params.width = 170;
+  params.height = 170;
 
   // Set up GraycodePattern with params
   Ptr<structured_light::GrayCodePattern> graycode = structured_light::GrayCodePattern::create( params );
@@ -103,10 +103,14 @@ int main( int argc, char** argv )
   graycode->getImagesForShadowMasks( black, white );
   pattern.push_back( white );
   pattern.push_back( black );
+
+  cout << pattern.size() << " total patterns with shadow masks white average:"<< mean(pattern[pattern.size()-1]) <<" black average: "<<mean(pattern[pattern.size()-2])
+         << endl;
+
   // Setting pattern window on second monitor (the projector's one)
   namedWindow( "Pattern Window", WINDOW_NORMAL );
   resizeWindow( "Pattern Window", params.width, params.height );
-  moveWindow( "Pattern Window", 600, 500);
+  moveWindow( "Pattern Window", 650, 574);
   //setWindowProperty( "Pattern Window", WND_PROP_FULLSCREEN, WINDOW_FULLSCREEN );
   // subscribe to dvrk cams
   ros::NodeHandle nh;
@@ -120,6 +124,11 @@ int main( int argc, char** argv )
   {
     cout << "Waiting to save image number " << i + 1 << endl << "Press any key to acquire the photo" << endl;
     imshow( "Pattern Window", pattern[i] );
+
+    waitKey(0);
+    
+
+    ros::spinOnce();
 
     got_image1 = false;
     int count_image1_cb=0;
@@ -184,7 +193,8 @@ int main( int argc, char** argv )
       {
         cout << "pattern cam1 and cam2 images number " << i + 1 << " NOT saved" << endl << endl << "Retry, check the path"<< endl << endl;
       }
-      if (waitKey(1) <= 0) break;
+      // if (waitKey(1) <= 0) break;
+      // waitKey(0);
     }
     else
     {

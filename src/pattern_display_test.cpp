@@ -10,7 +10,7 @@ int main(int argc, char **argv)
 
   cv::Mat image1;
 
-  std::string img_path="/home/ammarnahari/ros_ws/src/dvrk_structure_light/img/black_white_stripes.jpg";
+  std::string img_path="/home/ammarnahari/ros_ws/src/dvrk_structure_light/data/Structured-light-pattern_Q640.jpg";
   
   image1=cv::imread(img_path,cv::IMREAD_COLOR);
 
@@ -19,9 +19,9 @@ int main(int argc, char **argv)
     ROS_INFO_STREAM("Could not read the image: " << img_path);
     return 1;
   }
-
-  cv::namedWindow("pattern_out",cv::WINDOW_AUTOSIZE);
-  cv::moveWindow("pattern_out",1920+150,500);
+  cv::namedWindow( "pattern_out", cv::WINDOW_NORMAL );
+  cv::resizeWindow( "pattern_out", 170, 170 );
+  cv::moveWindow("pattern_out",650,574);
 
   cv::imshow("pattern_out",image1);
   
