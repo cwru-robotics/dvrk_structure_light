@@ -20,7 +20,7 @@ int main(int argc, char **argv)
     return 1;
   }
   cv::namedWindow( "pattern_out", cv::WINDOW_NORMAL );
-  cv::resizeWindow( "pattern_out", 170, 170 );
+  cv::resizeWindow( "pattern_out", 300, 300 );
   cv::moveWindow("pattern_out",650,574);
 
   cv::imshow("pattern_out",image1);
