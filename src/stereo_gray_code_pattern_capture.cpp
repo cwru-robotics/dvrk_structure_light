@@ -87,8 +87,8 @@ int main( int argc, char** argv )
   ros::init(argc, argv, "stereo_gray_code_pattern_capture");
   structured_light::GrayCodePattern::Params params;
   String path = "/home/ammarnahari/ros_ws/src/dvrk_structure_light/data/";
-  params.width = 170;
-  params.height = 170;
+  params.width = 300;
+  params.height = 300;
 
   // Set up GraycodePattern with params
   Ptr<structured_light::GrayCodePattern> graycode = structured_light::GrayCodePattern::create( params );
