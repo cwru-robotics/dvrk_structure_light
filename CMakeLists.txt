@@ -38,6 +38,7 @@ add_executable(structured_light_combined src/structured_light_combined.cpp)
 add_executable(single_camera_position_1 src/single_camera_position_1.cpp)
 add_executable(single_camera_position_2 src/single_camera_position_2.cpp)
 add_executable(single_camera_decode src/single_camera_decode.cpp)
+add_executable(lau_calibration_less src/lau_calibration_less.cpp)
 
 add_custom_command(
 	TARGET test_nncam PRE_BUILD
@@ -57,3 +58,4 @@ target_link_libraries(structured_light_combined ${catkin_LIBRARIES} ${OpenCV_LIB
 target_link_libraries(single_camera_position_1 ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 target_link_libraries(single_camera_position_2 ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 target_link_libraries(single_camera_decode ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+target_link_libraries(lau_calibration_less ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
