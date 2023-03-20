@@ -10,7 +10,7 @@ int main(int argc, char **argv)
 
   cv::Mat image1;
 
-  std::string img_path="/home/ammarnahari/ros_ws/src/dvrk_structure_light/data/Structured-light-pattern_Q640.jpg";
+  std::string img_path="/home/axn337/Downloads/black_white_stripes.jpg"; //add path to the image
   
   image1=cv::imread(img_path,cv::IMREAD_COLOR);
 
@@ -20,8 +20,8 @@ int main(int argc, char **argv)
     return 1;
   }
   cv::namedWindow( "pattern_out", cv::WINDOW_NORMAL );
-  cv::resizeWindow( "pattern_out", 300, 300 );
-  cv::moveWindow("pattern_out",650,574);
+  cv::resizeWindow( "pattern_out", 500, 500 );
+  cv::moveWindow("pattern_out",750,574);
 
   cv::imshow("pattern_out",image1);
   

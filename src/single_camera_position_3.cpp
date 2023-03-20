@@ -1,0 +1,129 @@
+#include <ros/ros.h>
+#include <opencv2/imgproc.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/structured_light.hpp>
+#include <iostream>
+#include <stdio.h>
+#include <cv_bridge/cv_bridge.h>
+
+using namespace cv;
+using namespace std;
+bool got_image3;
+cv::Mat img3;
+void image1CB(const sensor_msgs::Image::ConstPtr& im)
+{
+  ROS_INFO("callback");
+
+  cv_bridge::CvImagePtr cv_ptr;
+	try {
+		cv_ptr = cv_bridge::toCvCopy(im);
+		img3 = cv_ptr->image;
+		got_image3 = true;
+		return;
+	} catch (cv_bridge::Exception &e) {
+		ROS_ERROR("Could not convert from encoding to 'bgr8'.");
+		return;
+	}
+}
+
+int main( int argc, char** argv )
+{
+  ros::init(argc, argv, "single_camera_position_3");
+  structured_light::GrayCodePattern::Params params;
+  String path = "/home/axn337/Documents/structured_light_data/data3/";
+  params.width = 100;
+  params.height = 100;
+
+  // Set up GraycodePattern with params
+  Ptr<structured_light::GrayCodePattern> graycode = structured_light::GrayCodePattern::create( params );
+  // Storage for pattern
+  vector<Mat> pattern;
+  graycode->generate( pattern );
+  cout << pattern.size() << " pattern images + 2 images for shadows mask computation to acquire with both cameras"
+         << endl;
+  // Generate the all-white and all-black images needed for shadows mask computation
+  Mat white;
+  Mat black;
+  graycode->getImagesForShadowMasks( black, white );
+  pattern.push_back( white );
+  pattern.push_back( black );
+
+  cout << pattern.size() << " total patterns with shadow masks white average:"<< mean(pattern[pattern.size()-1]) <<" black average: "<<mean(pattern[pattern.size()-2])
+         << endl;
+
+  // Setting pattern window on second monitor (the projector's one)
+  namedWindow( "Pattern Window", WINDOW_NORMAL );
+  resizeWindow( "Pattern Window", params.width, params.height );
+  moveWindow( "Pattern Window", 1080, 650);
+  //setWindowProperty( "Pattern Window", WND_PROP_FULLSCREEN, WINDOW_FULLSCREEN );
+  // subscribe to dvrk cams
+  ros::NodeHandle nh;
+  ros::Subscriber sub1 = nh.subscribe("/davinci_endo/left/image_raw", 1, image1CB);
+
+  ROS_INFO("created subscribiers, spinning...");
+
+  int i = 0;
+  while( i < (int) pattern.size() )
+  {
+    cout << "Waiting to save image number " << i + 1 << endl << "Press any key to acquire the photo" << endl;
+    imshow( "Pattern Window", pattern[i] );
+
+    waitKey(0);
+    
+
+    ros::spinOnce();
+
+    got_image3 = false;
+    int count_image3_cb=0;
+    while(!got_image3&&ros::ok){
+      ros::spinOnce();
+      ROS_WARN_STREAM("Waiting for image 1 data "<<count_image3_cb);
+      ros::Duration(0.1).sleep();
+      count_image3_cb++;
+    }    
+    
+
+    Mat frame3;
+    frame3=img3;  // get a new frame from camera 1
+    if(  frame3.data )
+    {
+      Mat tmp;
+      // cout << "cam 1 size: " << Size( ( int ) cap1.get( CAP_PROP_FRAME_WIDTH ), ( int ) cap1.get( CAP_PROP_FRAME_HEIGHT ) )
+      //      << endl;
+      // cout << "cam 2 size: " << Size( ( int ) cap2.get( CAP_PROP_FRAME_WIDTH ), ( int ) cap2.get( CAP_PROP_FRAME_HEIGHT ) )
+      //      << endl;
+      // cout << "zoom cam 1: " << cap1.get( CAP_PROP_ZOOM ) << endl << "zoom cam 2: " << cap2.get( CAP_PROP_ZOOM )
+      //      << endl;
+      // cout << "focus cam 1: " << cap1.get( CAP_PROP_FOCUS ) << endl << "focus cam 2: " << cap2.get( CAP_PROP_FOCUS )
+      //      << endl;
+      namedWindow( "cam3", WINDOW_NORMAL );
+      resizeWindow( "cam3", 640, 480 );
+
+      // Resizing images to avoid issues for high resolution images, visualizing them as grayscale
+      resize( frame3, tmp, Size( 640, 480 ), 0, 0, INTER_LINEAR);
+      cvtColor( tmp, tmp, COLOR_RGB2GRAY );
+      imshow( "cam3", tmp );
+      bool save3 = false;
+      ostringstream name;
+      name << i + 1;
+      save3 = imwrite( path + "pattern_cam3_im" + name.str() + ".png", frame3 );
+      if( save3 )
+      {
+        cout << "pattern cam3  images number " << i + 1 << " saved" << endl << endl;
+        i++;
+      }
+      else
+      {
+        cout << "pattern cam3 images number " << i + 1 << " NOT saved" << endl << endl << "Retry, check the path"<< endl << endl;
+      }
+      // if (waitKey(1) <= 0) break;
+      // waitKey(0);
+    }
+    else
+    {
+      cout << "No frame data, waiting for new frame" << endl;
+    }
+  }
+  // the camera will be deinitialized automatically in VideoCapture destructor
+  return 0;
+}
