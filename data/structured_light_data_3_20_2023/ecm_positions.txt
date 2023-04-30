@@ -1,0 +1,17 @@
+rosrun cwru_dvrk_control go_ecm 0 -0.31 .2 0 2
+[ INFO] [1679341025.977251050]: jointstate before sorting:
+0.199879, -0.306122, 0.00719589, 0.00497419,
+[ INFO] [1679341025.978259286]: jointstate after sorting:
+0.00497419, -0.306122, 0.199879, 0.00719589,
+~                                                                            3s
+❯ rosrun cwru_dvrk_control go_ecm 0 -0.31 .15 0 2
+[ INFO] [1679341116.577424092]: jointstate before sorting:
+0.199882, -0.304839, 0.00850423, 0.00497419,
+[ INFO] [1679341116.578518141]: jointstate after sorting:
+0.00497419, -0.304839, 0.199882, 0.00850423,
+~                                                                            3s
+❯ rosrun cwru_dvrk_control go_ecm 0 -0.31 .1 0 2
+[ INFO] [1679341193.626907684]: jointstate before sorting:
+0.151016, -0.304028, 0.0068688, 0.00497419,
+[ INFO] [1679341193.627734656]: jointstate after sorting:
+0.00497419, -0.304028, 0.151016, 0.0068688,

@@ -38,7 +38,7 @@ add_executable(structured_light_combined src/structured_light_combined.cpp)
 add_executable(single_camera_position_1 src/single_camera_position_1.cpp)
 add_executable(single_camera_position_2 src/single_camera_position_2.cpp)
 add_executable(single_camera_position_3 src/single_camera_position_3.cpp)
-add_executable(single_camera_decode src/single_camera_decode.cpp)
+add_executable(single_camera_decode src/single_camera_decode_2_poses.cpp)
 add_executable(lau_calibration_less src/lau_calibration_less.cpp)
 
 add_custom_command(
