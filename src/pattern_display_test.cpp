@@ -10,7 +10,7 @@ int main(int argc, char **argv)
 
   cv::Mat image1;
 
-  std::string img_path="/home/axn337/Downloads/black_white_stripes.jpg"; //add path to the image
+  std::string img_path="/home/dvrk/ros_ws/src/dvrk_structure_light/doc/checkerboard.jpg"; //add path to the image
   
   image1=cv::imread(img_path,cv::IMREAD_COLOR);
 
@@ -21,7 +21,7 @@ int main(int argc, char **argv)
   }
   cv::namedWindow( "pattern_out", cv::WINDOW_NORMAL );
   cv::resizeWindow( "pattern_out", 500, 500 );
-  cv::moveWindow("pattern_out",750,574);
+  // cv::moveWindow("pattern_out",750,574);
 
   cv::imshow("pattern_out",image1);
   

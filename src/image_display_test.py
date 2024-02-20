@@ -8,8 +8,9 @@ def main():
 
     size=100
 
-    img_path = "/home/axn337/Downloads/black_white_stripes.jpg"  # add path to the image
-    image1 = cv2.resize(cv2.imread(img_path, cv2.IMREAD_COLOR),(size,size))
+    img_path = "/home/dvrk/ros_ws/src/dvrk_structure_light/doc/checkerboard.jpg"  # add path to the image
+    # image1 = cv2.resize(cv2.imread(img_path, cv2.IMREAD_COLOR),(size,size))
+    image1 = cv2.imread(img_path, cv2.IMREAD_COLOR)
 
 
     if image1 is None:
@@ -18,7 +19,8 @@ def main():
 
     cv2.namedWindow("pattern_out", cv2.WINDOW_NORMAL)
     cv2.resizeWindow("pattern_out", size, size)
-    cv2.moveWindow("pattern_out", 1080, 650) #1280x800/1024
+    cv2.moveWindow("pattern_out", 1000, 450) #1280x800/1024
+
 
     cv2.imshow("pattern_out", image1)
     cv2.waitKey(0)
