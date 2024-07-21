@@ -57,3 +57,24 @@ The nodes in this package are categorized as test nodes, data collection nodes, 
 ```bash
 rosrun dvrk_structured_light <node_name>
 ```
+
+## data collection script file
+
+This file automates moving the camera and recording the data consists of stereo images and positions of the endoscope
+
+To setup the experiment follow these steps:
+
+- Open two terminals and exprot ros master, connecting with the main control computer: ` export ROS_MASTER_URI=http://129.22.143.140:11311`
+
+- In the first terminal start the camera: `roslaunch hw_camera run_camera.launch`
+
+- In the second terminal reset the endoscope to the first position (to udjust the camera focus and seetings), cd to where you want to collect the data and run the bash script. for example:
+
+```bash
+rosrun cwru_dvrk_control go_ecm 0.0 -1 0.00 0 1
+cd ~/Data
+bash ~/ros_ws/src/dvrk_structure_light/data_collection.bash > data.txt
+```
+
+
+
