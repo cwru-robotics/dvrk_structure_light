@@ -79,11 +79,65 @@ bash ~/ros_ws/src/dvrk_structure_light/data_collection.bash > data.txt
 ## Experiment setup
 
 The steps to prepare the experiment consists of:
-- Prepering the experiment environment
+- Prepering the experiment scene
 - Testing and adjusting the projector
 - Testing and adjusting the endoscope
 - Running the data collection node
 
 Details of each step is elaborated in the following section:
+
+### Experiment scene:
+
+The experiment scene includes three main elements: Structured Light Projector Endoscope, camera endoscope, and Target object. the three objects are placed so that the target sets on an elevated ground while the camera and projector's endoscopes face the target. See image below:
+
+![Experiment_Scene](https://github.com/cwru-robotics/dvrk_structure_light/blob/main/doc/experiment_setup.png)
+
+As seen above, the camera endoscope is pointing downwords with the camera tilt facing the target, and the projector endoscope is tilted 30 to 40 degrees. 
+
+### Testing the SL projector
+
+To test the projector, run:
+
+```bash
+roslaunch hw_camera run_camera.launch 
+rosrun dvrk_structure_light pattern_display_test
+```
+
+make sure the projection correctly covers the target area. Check below photo:
+
+![projection_example](https://github.com/cwru-robotics/dvrk_structure_light/blob/main/doc/projection_example.jpg).
+
+### Testing and adjusting the vision endoscope
+
+In the davinci control computer (or through an exported terminal from the vision computer) run:
+
+```bash
+rosrun cwru_dvrk_control go_ecm 0.0 -1 0.00 0 1
+```
+
+This places the endoscope in a virtical posa to the ground 
+
+Then adjust the target so it can be scene from all poses. For that you can run the data collection script to better test the positionings. 
+
+```bash
+bash ~/ros_ws/src/dvrk_structure_light/data_collection.bash > data.txt
+```
+
+The first and last camera poses should be placed like the images below. The camera start further from the target then gets closer at the end. 
+
+![first_cam_pose](https://github.com/cwru-robotics/dvrk_structure_light/blob/main/doc/first_cam_pose.jpg).
+![last_cam_pose](https://github.com/cwru-robotics/dvrk_structure_light/blob/main/doc/last_cam_pose.jpg).
+
+Examples of the data:
+
+![first_cam_image](https://github.com/cwru-robotics/dvrk_structure_light/blob/main/doc/first_cam_image.jpg).
+![last_cam_image](https://github.com/cwru-robotics/dvrk_structure_light/blob/main/doc/last_cam_image.jpg).
+
+You might need to reposition the projector and target based on the above tests. Iterate until the positions work well with the projector and camera endoscopes.
+
+
+### Run data collection
+
+At this point you can start running the data collection as explained [above](https://github.com/cwru-robotics/dvrk_structure_light?tab=readme-ov-file#data-collection-script-file)
 
 
