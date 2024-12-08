@@ -76,5 +76,14 @@ cd ~/Data
 bash ~/ros_ws/src/dvrk_structure_light/data_collection.bash > data.txt
 ```
 
+## Experiment setup
+
+The steps to prepare the experiment consists of:
+- Prepering the experiment environment
+- Testing and adjusting the projector
+- Testing and adjusting the endoscope
+- Running the data collection node
+
+Details of each step is elaborated in the following section:
 
 
